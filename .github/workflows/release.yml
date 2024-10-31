@@ -1,25 +1,22 @@
-name: Build RaspAP Image
+name: Build and publish RaspAP images
 
 permissions:
   contents: write
 
 on:
-  push:
-    branches:
-      - master
   release:
     types: [published]
 
 jobs:
-  build:
+  build-raspap-image:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        arch:
-          - { name: "32-bit", pi-gen-version: "master" }
-          - { name: "64-bit", pi-gen-version: "arm64" }
-      fail-fast: false
-
+        include:
+          - arch: "32-bit"
+            pi_gen_version: "master"
+          - arch: "64-bit"
+            pi_gen_version: "arm64"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,20 +26,20 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y git
 
-      - name: Build RaspAP Image (${{ matrix.arch.name }})
+      - name: Build RaspAP Image
         id: build
         uses: usimd/pi-gen-action@v1
         with:
-          image-name: "raspap-${{ github.ref_name }}-${{ matrix.arch.name }}"
+          image-name: "raspap-${{ github.ref_name }}-${{ matrix.arch }}"
           enable-ssh: 1
           stage-list: stage0 stage1 stage2
           verbose-output: true
-          pi-gen-version: ${{ matrix.arch.pi-gen-version }}
+          pi-gen-version: ${{ matrix.pi_gen_version }}
 
       - name: Upload Artifact
         uses: svenstaro/upload-release-action@v2
         with:
-          name: raspap-image-${{ matrix.arch.name }}
+          name: raspap-image-${{ matrix.arch }}
           file: ${{ steps.build.outputs.image-path }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
