@@ -1,9 +1,14 @@
 name: Build RaspAP Image
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
       - master
+  release:
+    types: [published]
 
 jobs:
   build:
