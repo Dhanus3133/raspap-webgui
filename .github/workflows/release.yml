@@ -24,17 +24,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Update and install Git
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git
+
       - name: Build RaspAP Image (${{ matrix.arch.name }})
         id: build
         uses: usimd/pi-gen-action@v1
         with:
           image-name: "raspap-${{ github.ref_name }}-${{ matrix.arch.name }}"
+          enable-ssh: 1
           stage-list: stage0 stage1 stage2
           verbose-output: true
           pi-gen-version: ${{ matrix.arch.pi-gen-version }}
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: svenstaro/upload-release-action@v2
         with:
           name: raspap-image-${{ matrix.arch.name }}
-          path: ${{ steps.build.outputs.image-path }}
+          file: ${{ steps.build.outputs.image-path }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          overwrite: true
