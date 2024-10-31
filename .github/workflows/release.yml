@@ -53,7 +53,7 @@ jobs:
           stage-list: stage0 stage1 stage2 ./custom_stage_raspap
           verbose-output: true
           pi-gen-version: ${{ matrix.pi_gen_version }}
-          release: stretch
+          release: buster
 
       - name: Upload Artifact
         uses: svenstaro/upload-release-action@v2
