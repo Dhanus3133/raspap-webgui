@@ -28,8 +28,11 @@ jobs:
         run: |
           echo "Listing files in $(pwd):"
           ls -al
-          cd deploy
+          echo "cd pi-gen"
+          cd pi-gen
+          ls -al
           echo "cd into deploy"
+          cd deploy
           ls -al
       #
       # - name: "Upload Artifact"
