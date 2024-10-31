@@ -55,7 +55,7 @@ jobs:
         with:
           image-name: "raspap-${{ github.ref_name }}-${{ matrix.arch }}"
           enable-ssh: 1
-          stage-list: stage0 ./custom_stage_raspap
+          stage-list: stage0 stage1 ./custom_stage_raspap
           verbose-output: true
           pi-gen-version: ${{ matrix.pi_gen_version }}
 
