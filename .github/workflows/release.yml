@@ -8,32 +8,28 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch:
+          - { name: "32-bit", pi-gen-version: "master" }
+          - { name: "64-bit", pi-gen-version: "arm64" }
+      fail-fast: false
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Update and install Git
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y git
-
-      - name: Build Raspberry Pi OS Image with RaspAP
+      - name: Build RaspAP Image (${{ matrix.arch.name }})
+        id: build
         uses: usimd/pi-gen-action@v1
         with:
-          image-name: "${{ github.GITHUB_REF_NAME && format('raspos-{}', github.GITHUB_REF_NAME) || 'raspos' }}"
+          image-name: "${{ format('raspos-{}-{}', github.GITHUB_REF_NAME, matrix.arch.name) }}"
           stage-list: stage0 stage1 stage2
           verbose-output: true
-          pi-gen-version: arm64
+          pi-gen-version: ${{ matrix.arch.pi-gen-version }}
 
-      - name: List files in the current directory
-        run: |
-          echo "Listing files in $(pwd):"
-          ls -al
-          echo "cd pi-gen"
-          cd pi-gen
-          ls -al
-          echo "cd into deploy"
-          cd deploy
-          ls -al
-      #
-      # - name: "Upload Artifact"
-      #   uses: actions/upload-artifact@v4
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: raspap-os-image-${{ matrix.arch.name }}
+          path: ${{ steps.build.outputs.image-path }}
