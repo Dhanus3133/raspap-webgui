@@ -22,11 +22,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Update DNS settings
-        run: |
-          echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
-          sudo apt-get update
-
       - name: Add Custom Stage
         run: |
           mkdir -p custom_stage_raspap/package-raspap &&
@@ -58,6 +53,7 @@ jobs:
           stage-list: stage0 stage1 stage2 ./custom_stage_raspap
           verbose-output: true
           pi-gen-version: ${{ matrix.pi_gen_version }}
+          release: jessie
 
       - name: Upload Artifact
         uses: svenstaro/upload-release-action@v2
