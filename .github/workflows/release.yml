@@ -39,7 +39,7 @@ jobs:
       - name: Upload Artifact
         uses: svenstaro/upload-release-action@v2
         with:
-          name: raspap-image-${{ matrix.arch }}
+          asset_name: raspap-image-${{ matrix.arch }}
           file: ${{ steps.build.outputs.image-path }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
