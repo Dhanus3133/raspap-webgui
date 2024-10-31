@@ -4,8 +4,9 @@ permissions:
   contents: write
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - "*"
 
 jobs:
   build-raspap-image:
@@ -20,6 +21,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Update DNS settings
+        run: |
+          echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
+          sudo apt-get update
 
       - name: Add Custom Stage
         run: |
