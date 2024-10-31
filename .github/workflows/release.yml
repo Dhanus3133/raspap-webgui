@@ -23,7 +23,7 @@ jobs:
         id: build
         uses: usimd/pi-gen-action@v1
         with:
-          image-name: "${{ format('raspos-{}-{}', github.GITHUB_REF_NAME, matrix.arch.name) }}"
+          image-name: "raspap-${{ github.ref_name }}-${{ matrix.arch.name }}"
           stage-list: stage0 stage1 stage2
           verbose-output: true
           pi-gen-version: ${{ matrix.arch.pi-gen-version }}
@@ -31,5 +31,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: raspap-os-image-${{ matrix.arch.name }}
+          name: raspap-image-${{ matrix.arch.name }}
           path: ${{ steps.build.outputs.image-path }}
