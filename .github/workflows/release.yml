@@ -15,3 +15,5 @@ jobs:
         uses: usimd/pi-gen-action@v1
         with:
           compression: gz
+          image-name: "${{ github.GITHUB_REF_NAME && format('raspos-{}', github.GITHUB_REF_NAME) || 'raspos' }}"
+          stage-list: stage0 stage1 stage2
