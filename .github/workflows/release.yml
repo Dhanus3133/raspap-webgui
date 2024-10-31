@@ -14,6 +14,15 @@ jobs:
       - name: Build Raspberry Pi OS Image with RaspAP
         uses: usimd/pi-gen-action@v1
         with:
-          compression: gz
           image-name: "${{ github.GITHUB_REF_NAME && format('raspos-{}', github.GITHUB_REF_NAME) || 'raspos' }}"
           stage-list: stage0 stage1 stage2
+          verbose-output: true
+          pi-gen-version: arm64
+
+      - name: List files in the current directory
+        run: |
+          echo "Listing files in $(pwd):"
+          ls -al
+      #
+      # - name: "Upload Artifact"
+      #   uses: actions/upload-artifact@v4
