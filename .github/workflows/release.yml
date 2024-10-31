@@ -34,7 +34,7 @@ jobs:
           cat > custom_stage_raspap/package-raspap/00-run-chroot.sh <<-EOF
           #!/bin/bash
           echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
-          apt-get update -y && apt-get install -y curl
+          sudo apt-get update -y && apt-get install -y curl
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
           EOF
           } &&
@@ -55,7 +55,7 @@ jobs:
         with:
           image-name: "raspap-${{ github.ref_name }}-${{ matrix.arch }}"
           enable-ssh: 1
-          stage-list: stage0 stage1 stage2 ./custom_stage_raspap
+          stage-list: ./custom_stage_raspap
           verbose-output: true
           pi-gen-version: ${{ matrix.pi_gen_version }}
 
