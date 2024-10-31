@@ -11,6 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Update and install Git
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git
+
       - name: Build Raspberry Pi OS Image with RaspAP
         uses: usimd/pi-gen-action@v1
         with:
@@ -22,6 +27,9 @@ jobs:
       - name: List files in the current directory
         run: |
           echo "Listing files in $(pwd):"
+          ls -al
+          cd deploy
+          echo "cd into deploy"
           ls -al
       #
       # - name: "Upload Artifact"
