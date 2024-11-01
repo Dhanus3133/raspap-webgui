@@ -37,6 +37,7 @@ jobs:
           echo "after overwriting"
           cat /etc/resolvconf/resolv.conf.d/base
           sudo resolvconf -u
+          sudo service network-manager restart
           sudo apt-get update -y
           apt-get install -y curl
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
