@@ -19,7 +19,7 @@ jobs:
             release: "bookworm"
           - arch: "64-bit"
             pi_gen_version: "arm64"
-            release: "stretch"
+            release: "buster"
       fail-fast: false
     steps:
       - name: Checkout repository
