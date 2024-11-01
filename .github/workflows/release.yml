@@ -55,6 +55,7 @@ jobs:
           verbose-output: true
           pi-gen-version: ${{ matrix.pi_gen_version }}
           disable-first-boot-user-rename: 1
+          password: raspap
 
       - name: Upload Artifact
         uses: svenstaro/upload-release-action@v2
