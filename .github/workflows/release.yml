@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-raspap-image:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
@@ -28,6 +28,7 @@ jobs:
           {
           cat > custom_stage_raspap/package-raspap/00-run-chroot.sh <<-EOF
           #!/bin/bash
+          echo "nameserver 127.0.0.1" > /etc/resolv.conf
           apt-get update -y && apt-get install -y curl
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
           EOF
