@@ -52,7 +52,7 @@ jobs:
           stage-list: stage0 stage1 stage2 ./custom_stage_raspap
           verbose-output: true
           pi-gen-version: ${{ matrix.pi_gen_version }}
-          extra-host-dependencies: 'curl userconf-pi'
+          extra-host-modules: 'curl userconf-pi'
 
       - name: Upload Artifact
         uses: svenstaro/upload-release-action@v2
