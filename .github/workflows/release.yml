@@ -29,16 +29,8 @@ jobs:
           {
           cat > custom_stage_raspap/package-raspap/00-run-chroot.sh <<-EOF
           #!/bin/bash
-          apt-get install resolvconf
-          echo "Before overwriting"
-          cat /etc/resolvconf/resolv.conf.d/base
-          echo "nameserver 8.8.8.8" | sudo tee /etc/resolvconf/resolv.conf.d/base > /dev/null
-          echo "nameserver 8.8.4.4" | sudo tee /etc/resolvconf/resolv.conf.d/base > /dev/null
-          echo "after overwriting"
-          cat /etc/resolvconf/resolv.conf.d/base
-          sudo resolvconf -u
-          sudo service network-manager restart
-          sudo apt-get update -y
+          echo "supersede domain-name-servers 8.8.8.8;" | sudo tee /etc/dhcp/dhclient.conf
+          apt-get update -y
           apt-get install -y curl
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
           EOF
