@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-raspap-image:
-    runs-on: macos-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         include:
