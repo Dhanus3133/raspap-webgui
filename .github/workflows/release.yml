@@ -29,7 +29,9 @@ jobs:
           {
           cat > custom_stage_raspap/package-raspap/00-run-chroot.sh <<-EOF
           #!/bin/bash
-          echo "nameserver 8.8.8.8" | sudo tee /etc/resolvconf/resolv.conf.d/base > /dev/null
+          sudo systemctl unmask systemd-resolved.service
+          sudo systemctl enable systemd-resolved.service
+          sudo systemctl start systemd-resolved.service
           apt-get update -y
           apt-get install -y curl
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
