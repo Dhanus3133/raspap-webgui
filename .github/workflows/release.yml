@@ -31,7 +31,7 @@ jobs:
           #!/bin/bash
           apt-get update -y
           apt-get install -y curl
-          curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
+          curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 0 --restapi 0 --adblock 0 --wireguard 0 --tcp-bbr 0
           EOF
           } &&
           chmod +x custom_stage_raspap/package-raspap/00-run-chroot.sh &&
@@ -54,8 +54,6 @@ jobs:
           stage-list: stage0 stage1 stage2 ./custom_stage_raspap
           verbose-output: true
           pi-gen-version: ${{ matrix.pi_gen_version }}
-          disable-first-boot-user-rename: 1
-          password: raspap
 
       - name: Upload Artifact
         uses: svenstaro/upload-release-action@v2
