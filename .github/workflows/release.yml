@@ -29,7 +29,11 @@ jobs:
           {
           cat > custom_stage_raspap/package-raspap/00-run-chroot.sh <<-EOF
           #!/bin/bash
-          echo "supersede domain-name-servers 8.8.8.8;" | sudo tee /etc/dhcp/dhclient.conf
+          apt-get install dnsmasq
+          echo "server=8.8.8.8" | sudo tee /etc/dnsmasq.conf
+          echo "server=8.8.4.4" | sudo tee /etc/dnsmasq.conf
+          sudo service dnsmasq restart
+          sudo service network-manager restart
           apt-get update -y
           apt-get install -y curl
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
