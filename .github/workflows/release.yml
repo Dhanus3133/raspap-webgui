@@ -16,10 +16,8 @@ jobs:
         include:
           - arch: "32-bit"
             pi_gen_version: "master"
-            release: "bookworm"
           - arch: "64-bit"
             pi_gen_version: "arm64"
-            release: "testing"
       fail-fast: false
     steps:
       - name: Checkout repository
@@ -31,7 +29,9 @@ jobs:
           {
           cat > custom_stage_raspap/package-raspap/00-run-chroot.sh <<-EOF
           #!/bin/bash
-          apt-get update -y && apt-get install -y curl
+          echo 'nameserver 1.1.1.1' | tee -a /etc/resolv.conf
+          apt-get update -y
+          apt-get install -y curl
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
           EOF
           } &&
@@ -55,7 +55,6 @@ jobs:
           stage-list: stage0 stage1 stage2 ./custom_stage_raspap
           verbose-output: true
           pi-gen-version: ${{ matrix.pi_gen_version }}
-          release: ${{ matrix.release }}
 
       - name: Upload Artifact
         uses: svenstaro/upload-release-action@v2
