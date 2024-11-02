@@ -29,14 +29,15 @@ jobs:
           {
           cat > custom_stage_raspap/package-raspap/00-run-chroot.sh <<-EOF
           #!/bin/bash
+          pwd
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
-          sed -i '1i echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf' export-image/01-user-rename/01-run.sh
-          sed -i '2i apt-get -y update' export-image/01-user-rename/01-run.sh
-          sed -i '3i apt-get install -y userconf-pi' export-image/01-user-rename/01-run.sh
-          rm export-image/01-user-rename/00*
-          mv export-image/01-user-rename/01-run.sh export-image/01-user-rename/00-run.sh
-          ls export-image/01-user-rename
-          cat export-image/01-user-rename/00-run.sh
+          sed -i '1i echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf' pi-gen/export-image/01-user-rename/01-run.sh
+          sed -i '2i apt-get -y update' pi-gen/export-image/01-user-rename/01-run.sh
+          sed -i '3i apt-get install -y userconf-pi' pi-gen/export-image/01-user-rename/01-run.sh
+          rm pi-gen/export-image/01-user-rename/00*
+          mv pi-gen/export-image/01-user-rename/01-run.sh export-image/01-user-rename/00-run.sh
+          ls pi-gen/export-image/01-user-rename
+          cat pi-gen/export-image/01-user-rename/00-run.sh
           EOF
           } &&
           chmod +x custom_stage_raspap/package-raspap/00-run-chroot.sh &&
