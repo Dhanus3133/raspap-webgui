@@ -29,6 +29,9 @@ jobs:
           {
           cat > custom_stage_raspap/package-raspap/00-run-chroot.sh <<-EOF
           #!/bin/bash
+          apt-get install tree -y
+          tree .
+          ls -a
           pwd
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
           sed -i '1i echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf' pi-gen/export-image/01-user-rename/01-run.sh
