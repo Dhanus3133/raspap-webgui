@@ -31,6 +31,10 @@ jobs:
           #!/bin/bash
           apt-get install curl -y
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
+          on_chroot << EOF
+          echo 'nameserver 1.1.1.1' | tee -a /etc/resolv.conf
+          apt-get -y update
+          EOF
           EOF
           } &&
           chmod +x custom_stage_raspap/package-raspap/00-run-chroot.sh &&
@@ -49,7 +53,6 @@ jobs:
         uses: usimd/pi-gen-action@v1
         with:
           image-name: "raspap-${{ github.ref_name }}-${{ matrix.arch }}"
-          pi-gen-repository: Dhanus3133/pi-gen
           enable-ssh: 1
           stage-list: stage0 stage1 stage2 ./custom_stage_raspap
           verbose-output: true
