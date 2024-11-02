@@ -30,6 +30,8 @@ jobs:
           cat > custom_stage_raspap/package-raspap/00-run-chroot.sh <<-EOF
           #!/bin/bash
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
+          echo 'nameserver 1.1.1.1' | sudo tee -a /etc/resolv.conf
+          apt-get -y update
           EOF
           } &&
           chmod +x custom_stage_raspap/package-raspap/00-run-chroot.sh &&
@@ -52,7 +54,6 @@ jobs:
           stage-list: stage0 stage1 stage2 ./custom_stage_raspap
           verbose-output: true
           pi-gen-version: ${{ matrix.pi_gen_version }}
-          extra-host-modules: 'curl userconf-pi'
 
       - name: Upload Artifact
         uses: svenstaro/upload-release-action@v2
