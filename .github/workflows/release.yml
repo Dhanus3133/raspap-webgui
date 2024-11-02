@@ -49,6 +49,7 @@ jobs:
         uses: usimd/pi-gen-action@v1
         with:
           image-name: "raspap-${{ github.ref_name }}-${{ matrix.arch }}"
+          pi-gen-repository: Dhanus3133/pi-gen
           enable-ssh: 1
           stage-list: stage0 stage1 stage2 ./custom_stage_raspap
           verbose-output: true
