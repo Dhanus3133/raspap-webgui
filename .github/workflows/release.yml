@@ -27,14 +27,12 @@ jobs:
         run: |
           mkdir -p custom_stage_raspap/package-raspap &&
           {
-          cat > custom_stage_raspap/package-raspap/00-run-chroot.sh <<-EOF
+          cat > custom_stage_raspap/package-raspap/00-run.sh <<-EOF
           #!/bin/bash
+          pwd
+          ls
           apt-get install curl -y
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
-          on_chroot << EOF
-          echo 'nameserver 1.1.1.1' | tee -a /etc/resolv.conf
-          apt-get -y update
-          EOF
           EOF
           } &&
           chmod +x custom_stage_raspap/package-raspap/00-run-chroot.sh &&
