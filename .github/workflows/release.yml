@@ -27,13 +27,13 @@ jobs:
         run: |
           mkdir -p custom_stage_raspap/package-raspap &&
           {
-          cat > custom_stage_raspap/package-raspap/00-run.sh <<-EOF
+          cat > custom_stage_raspap/package-raspap/00-run-chroot.sh <<-EOF
           #!/bin/bash
-          apt-get update -y && apt-get install -y curl iptables
+          apt-get update -y && apt-get install -y curl dhcpcd5 iptables procps
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
           EOF
           } &&
-          chmod +x custom_stage_raspap/package-raspap/00-run.sh &&
+          chmod +x custom_stage_raspap/package-raspap/00-run-chroot.sh &&
           {
           cat > custom_stage_raspap/prerun.sh <<-EOF
           #!/bin/bash -e
@@ -53,6 +53,7 @@ jobs:
           stage-list: stage0 stage1 stage2 ./custom_stage_raspap
           verbose-output: true
           pi-gen-version: ${{ matrix.pi_gen_version }}
+          pi-gen-repository: Dhanus3133/pi-gen
 
       - name: Upload Artifact
         uses: svenstaro/upload-release-action@v2
