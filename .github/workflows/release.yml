@@ -25,6 +25,7 @@ jobs:
 
       - name: Update pi-gen internals
         run: |
+          sudo apt-get install tree
           mkdir -p rename-stage &&
           {
           cat > rename-stage/prerun.sh <<-EOF
