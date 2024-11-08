@@ -31,7 +31,7 @@ jobs:
           #!/bin/bash
           # Fix the DNS problem for the temporary failure when installing packages in rename-user step
           ls
-          BASE_DIR="${{ github.workspace }}/pi-gen"
+          BASE_DIR="\${{ github.workspace }}/\${{ inputs.custom-pi-gen-dir }}"
           ls "\$BASE_DIR"
           mv "\${BASE_DIR}/export-image/01-user-rename" "\${BASE_DIR}/export-image/03-user-rename"
           mv "\${BASE_DIR}/export-image/03-network" "\${BASE_DIR}/export-image/01-network"
@@ -69,6 +69,9 @@ jobs:
           stage-list: rename-stage stage0 stage1 stage2 ./custom_stage_raspap
           verbose-output: true
           pi-gen-version: ${{ matrix.pi_gen_version }}
+          custom-pi-gen-dir: custom-pi-gen
+          pi-gen-dir: ${{ inputs.custom-pi-gen-dir }}
+
 
       - name: Upload Artifact
         uses: svenstaro/upload-release-action@v2
