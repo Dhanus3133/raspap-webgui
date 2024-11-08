@@ -70,7 +70,7 @@ jobs:
           verbose-output: true
           pi-gen-version: ${{ matrix.pi_gen_version }}
           custom-pi-gen-dir: custom-pi-gen
-          pi-gen-dir: ${{ inputs.custom-pi-gen-dir }}
+          pi-gen-dir: custom-pi-gen
 
 
       - name: Upload Artifact
