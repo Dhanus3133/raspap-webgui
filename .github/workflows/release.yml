@@ -32,7 +32,7 @@ jobs:
           # Fix the DNS problem for the temporary failure when installing packages in rename-user step
           ls
           BASE_DIR="${{ github.workspace }}/pi-gen"
-          ls BASE_DIR
+          ls "\$BASE_DIR"
           mv "\${BASE_DIR}/export-image/01-user-rename" "\${BASE_DIR}/export-image/03-user-rename"
           mv "\${BASE_DIR}/export-image/03-network" "\${BASE_DIR}/export-image/01-network"
           EOF
