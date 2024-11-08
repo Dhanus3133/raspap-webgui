@@ -23,6 +23,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Update pi-gen internals
+        run: |
+          export BASE_DIR="${{ github.workspace }}/${{ inputs.custom-pi-gen-dir }}"
+          mv "${BASE_DIR}/export-image/01-user-rename" "${BASE_DIR}/export-image/03-user-rename"
+          mv "${BASE_DIR}/export-image/03-network" "${BASE_DIR}/export-image/01-network"
+
       - name: Add Custom Stage
         run: |
           mkdir -p custom_stage_raspap/package-raspap &&
