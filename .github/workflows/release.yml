@@ -38,7 +38,7 @@ jobs:
           tree "${{ github.workspace }}"
           EOF
           } &&
-          chmod +x rename-stage/prerun.sh
+          chmod +x rename-stage/prerun-chroot.sh
 
       - name: Add Custom Stage
         run: |
