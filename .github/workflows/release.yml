@@ -29,12 +29,23 @@ jobs:
           {
           cat > custom_stage_raspap/package-raspap/00-run-chroot.sh <<-EOF
           #!/bin/bash
-          apt-get update -y && apt-get install -y curl iptables procps tree
+          apt-get update -y && apt-get install -y curl iptables procps
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1
-          find $(pwd) -type d -name '*export-image*' -exec tree -d {} \;
           EOF
           } &&
           chmod +x custom_stage_raspap/package-raspap/00-run-chroot.sh &&
+          {
+          cat > custom_stage_raspap/package-raspap/01-network.sh <<-EOF
+          #!/bin/bash
+          apt-get update -y && apt-get install -y tree
+          cd
+          tree .
+          echo "==================================="
+          cd /
+          find $(pwd) -type d -name '*export-image*' -exec tree -d {} \;
+          EOF
+          } &&
+          chmod +x custom_stage_raspap/package-raspap/01-network.sh &&
           {
           cat > custom_stage_raspap/prerun.sh <<-EOF
           #!/bin/bash -e
