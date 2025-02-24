@@ -793,14 +793,14 @@ function _configure_networking() {
         else
             rule=$(sed -e 's/^\(-A POSTROUTING\)/-t nat \1/' <<< $rule)
             echo "Adding rule: ${rule}"
-            sudo iptables $rule || _install_status 1 "Unable to execute iptables"
+            sudo iptables $rule
             added=true
         fi
     done
     # Persist rules if added
     if [ "$added" = true ]; then
         echo "Persisting IP tables rules"
-        sudo iptables-save | sudo tee $rulesv4 > /dev/null || _install_status 1 "Unable to execute iptables-save"
+        sudo iptables-save | sudo tee $rulesv4 > /dev/null
     fi
 
     # Prompt to install RaspAP daemon
