@@ -29,7 +29,8 @@ jobs:
           {
           cat > stage-raspap/package-raspap/00-run-chroot.sh <<-EOF
           #!/bin/bash
-          apt-get update -y && apt-get install -y curl dhcpcd5 nftables procps
+          apt-get update -y && apt-get install -y curl dhcpcd5 nftables procps netfilter-persistent
+          update-alternatives --set iptables /usr/sbin/iptables-nft
           curl -sL https://install.raspap.com | bash -s -- --yes --openvpn 1 --restapi 1 --adblock 1 --wireguard 1 --tcp-bbr 1 --check 0
 
           # Set Wi-Fi country to prevent RF kill
