@@ -71,7 +71,7 @@ jobs:
           pi-gen-version: ${{ matrix.pi_gen_version }}
           pi-gen-repository: RaspAP/pi-gen
           extra-host-dependencies: iptables netfilter-persistent iptables-persistent
-          release: bullseye
+          release: stretch
 
       - name: Upload Artifact
         uses: svenstaro/upload-release-action@v2
